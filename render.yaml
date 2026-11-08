@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: portfolio-website
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server/index.ts
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: PORT
+        value: 10000
+      - key: FOLIO_EMAIL
+        sync: false
+      - key: FOLIO_PASSWORD
+        sync: false
