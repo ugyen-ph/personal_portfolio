@@ -12,8 +12,16 @@ const port = 8080;
 app.use(cors());
 app.use(compression());
 
-// Have Node serve the files for our built React app
+// Serve the inner site (UgyenOS) static assets at /inner-site
+app.use('/inner-site', express.static(path.resolve(__dirname, '../../inner-site-src/build')));
+
+// Have Node serve the files for our built React app (public folder)
 app.use(express.static(path.resolve(__dirname, '../public')));
+
+// Serve the built inner-site index.html for /inner-site and all client-side sub-routes (e.g. /inner-site/projects)
+app.get(['/inner-site', '/inner-site/*'], (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../inner-site-src/build/index.html'));
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,8 +47,8 @@ app.post('/api/send-email', (req, res) => {
         .then(() => {
             transporter
                 .sendMail({
-                    from: `"${name}" <henryheffernan.folio@gmail.com>`, // sender address
-                    to: 'henryheffernan@gmail.com, henryheffernan.folio@gmail.com', // list of receivers
+                    from: `"${name}" <pugyen82@gmail.com>`, // sender address
+                    to: 'pugyen82@gmail.com', // list of receivers
                     subject: `${name} <${email}> ${
                         company ? `from ${company}` : ''
                     } submitted a contact form`, // Subject line
