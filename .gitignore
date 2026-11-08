@@ -3,4 +3,18 @@ package-lock.json
 .DS_Store
 *.psd
 
+# Built output (Vercel serves from public/)
 public/
+build/
+
+# Vercel contact form function (negated from api/ ignore)
+!api/send-email.js
+
+# Vercel config (committed for CI)
+vercel.json
+
+# Build artifacts & secrets
+*.log
+.env
+.env.*
+!vercel.json
